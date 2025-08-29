@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ProfileController extends Controller
+class ProfilController extends Controller
 {
     // Afficher la page du profil
     public function index()
@@ -26,5 +26,5 @@ class ProfileController extends Controller
         // $user->update($request->all());
 
         return redirect()->route('profile.index')->with('success', 'Profile mis à jour avec succès.');
-    }
+}
 }

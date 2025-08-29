@@ -42,7 +42,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 // Redirection après login basée sur le rôle
 Route::get('/redirect-after-login', function () {
     $user = Auth::user();
-    
+
     if ($user->isAdmin()) {
         return redirect()->route('admin.dashboard');
     } elseif ($user->isMedecin()) {
@@ -53,12 +53,14 @@ Route::get('/redirect-after-login', function () {
 
     return redirect('/home');
 })->name('redirect.after.login');
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+
+
+Route::prefix('admin')->middleware(['auth', 'admin'])->as('admin.')->group(function () {
     // ... routes existantes ...
-    Route::get('/medecins', [AdminController::class, 'listeMedecins'])->name('admin.medecins');
-    Route::get('/medecins/{id}', [AdminController::class, 'showMedecin'])->name('admin.medecin.show');
-    Route::get('/patients', [AdminController::class, 'listePatients'])->name('admin.patients');
-    Route::get('/patients/{id}', [AdminController::class, 'showPatient'])->name('admin.patient.show');
+    Route::get('/medecins', [AdminController::class, 'listeMedecins'])->name('medecins');
+    Route::get('/medecins/{id}', [AdminController::class, 'showMedecin'])->name('medecin.show');
+    Route::get('/patients', [AdminController::class, 'listePatients'])->name('patients');
+    Route::get('/patients/{id}', [AdminController::class, 'showPatient'])->name('patient.show');
 });
 
 // Routes Médecin
@@ -84,7 +86,7 @@ Route::prefix('patient')->middleware(['auth', 'patient'])->group(function () {
 // Redirection après login
 Route::get('/redirect-after-login', function () {
     $user = Auth::user();
-    
+
     if ($user->isAdmin()) {
         return redirect()->route('admin.dashboard');
     } elseif ($user->isMedecin()) {
@@ -115,18 +117,18 @@ Route::get('/test-db', function () {
         // Test de connexion à la base de données
         \DB::connection()->getPdo();
         echo "Connexion à la base de données réussie!<br>";
-        
+
         // Test des modèles
         $users = \App\Models\User::count();
         echo "Nombre d'utilisateurs: " . $users . "<br>";
-        
+
         $roles = \App\Models\Role::all();
         echo "Rôles existants: ";
         foreach ($roles as $role) {
             echo $role->name . " ";
         }
         echo "<br>";
-        
+
         echo "✅ Tous les tests sont passés avec succès!";
         } catch (\Exception $e) {
         die("Erreur de connexion à la base de données: " . $e->getMessage());
@@ -145,7 +147,7 @@ Route::get('/medecin/dashboard', function () {
 Route::get('/patient/dashboard', function () {
     return view('patient.dashboard');
 })->middleware('auth');
-        
+
 
 Route::get('/medecins',[MedecinController::class,'index'])->name('medecins.index');
 Route::post('/medecins',[MedecinController::class,'store'])->name('medecins.store');

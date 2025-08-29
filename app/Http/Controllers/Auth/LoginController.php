@@ -37,7 +37,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     protected function redirectTo()
 {
     $role = auth()->user()->role->name; // récupère le rôle de l’utilisateur connecté
@@ -51,6 +51,6 @@ class LoginController extends Controller
             return '/patient/dashboard'; // route du patient
         default:
             return '/home'; // page par défaut si aucun rôle
-    }
+}
 }
 }

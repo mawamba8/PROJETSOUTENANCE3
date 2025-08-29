@@ -40,7 +40,7 @@ class RendezVous extends Model
     /** Ce RDV appartient à un patient */
     public function patient()
     {
-        return $this->belongsTo(Use::class, 'patient_id');
+        return $this->belongsTo(User::class, 'patient_id');
     }
 
     /** Ce RDV appartient à un médecin */
@@ -48,7 +48,7 @@ class RendezVous extends Model
     {
         return $this->belongsTo(User::class, 'medecin_id');
     }
-  
+
 }
 
 

@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RendezVousController extends Controller
+class Rendez_VousController extends Controller
 {
       public function __construct()
     {
@@ -17,7 +17,7 @@ class RendezVousController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         if ($user->isMedecin()) {
             $rendezvous = RendezVous::where('medecin_id', $user->id)
                                   ->with('patient')
@@ -40,7 +40,7 @@ class RendezVousController extends Controller
     public function create()
     {
         $user = Auth::user();
-        
+
         if ($user->isMedecin()) {
             $patients = User::where('created_by', $user->id)
                           ->whereHas('role', function($query) {
@@ -96,7 +96,7 @@ class RendezVousController extends Controller
     public function edit(RendezVous $rendezVous)
     {
         $this->authorize('update', $rendezVous);
-        
+
         $user = Auth::user();
         if ($user->isMedecin()) {
             $patients = User::where('created_by', $user->id)
