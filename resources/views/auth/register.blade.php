@@ -13,46 +13,67 @@
             @csrf
 
             <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
+            <div class="row align-items-center">
+                <div class="col">
+                    <x-label for="name" :value="__('Name')" />
+                </div>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <div class="col-9">
+                    <x-input id="name" class="block mt-1 w-100 py-1 rounded" type="text" name="name" :value="old('name')" required autofocus />
+                </div>
             </div>
 
             <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+            <div class="mt-4 row align-items-center">
+                <div class="col">
+                    <x-label for="email" :value="__('Email')" />
+                </div>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <div class="col-9">
+                    <x-input id="email" class="block mt-1 w-100 py-1 rounded" type="email"
+                             name="email" :value="old('email')" required />
+                </div>
             </div>
 
             <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+            <div class="mt-4 row align-items-center">
+                <div class="col">
+                    <x-label for="password" :value="__('Password')" />
+                </div>
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
+                <div class="col-9">
+                    <x-input id="password" class="block mt-1 w-100 py-1 rounded"
+                             type="password"
+                             name="password"
+                             required autocomplete="new-password" />
+                </div>
             </div>
 
             <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
+            <div class="mt-4 row align-items-center">
+                <div class="col">
+                    <x-label  for="password_confirmation" :value="__('Confirm Password')" />
+                </div>
+                <div class="col-9">
+                    <x-input id="password_confirmation" class="block mt-1 w-100 py-1 rounded"
+                             type="password"
+                             name="password_confirmation" required />
+                </div>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
+            <div class="d-flex align-items-center justify-content-end mt-4">
+                <x-button class="ml-3 bg-secondary border-0 rounded">
                     {{ __('Register') }}
                 </x-button>
+            </div>
+
+
+            <div class="d-flex align-items-center justify-content-center mt-4">
+                {{ __('Vous avez déjà un compte ? ') }}
+                <a class="underline text-sm text-gray-600 hover:text-gray-900"
+                   href="{{ route('login') }}">
+                    {{ __(' ') }} se connecter
+                </a>
             </div>
         </form>
     </x-auth-card>

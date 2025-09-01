@@ -16,11 +16,11 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        $medecins = User::whereHas('role', function($query) {
+        $medecins = User::whereHas('role', function ($query) {
             $query->where('name', 'medecin');
         })->count();
 
-        $patients = User::whereHas('role', function($query) {
+        $patients = User::whereHas('role', function ($query) {
             $query->where('name', 'patient');
         })->count();
 
@@ -41,7 +41,7 @@ class AdminController extends Controller
             'telephone' => 'required|string',
             'specialite' => 'required|string',
         ]);
-$roleMedecin = Role::where('name', 'medecin')->first();
+        $roleMedecin = Role::where('name', 'medecin')->first();
 
         User::create([
             'name' => $request->name,
@@ -85,49 +85,52 @@ $roleMedecin = Role::where('name', 'medecin')->first();
 
         return redirect()->route('admin.dashboard')->with('success', 'Compte patient créé avec succès');
     }
-public function listeMedecins()
-{
-    $medecins = User::whereHas('role', function($query) {
-        $query->where('name', 'medecin');
-    })->get();
 
-    return view('admin.medecins', compact('medecins'));
-}
+    public function listeMedecins()
+    {
+        $medecins = User::whereHas('role', function ($query) {
+            $query->where('name', 'medecin');
+        })->get();
 
-public function listePatients()
-{
-    $patients = User::whereHas('role', function($query) {
-        $query->where('name', 'patient');
-    })->get();
+        return view('admin.medecins', compact('medecins'));
+    }
 
-    return view('admin.patients', compact('patients'));
-}
+    public function listePatients()
+    {
+        $patients = User::whereHas('role', function ($query) {
+            $query->where('name', 'patient');
+        })->get();
 
-public function showMedecin($id)
-{
-    $medecin = User::whereHas('role', function($query) {
-        $query->where('name', 'medecin');
-    })->findOrFail($id);
+        return view('admin.patients', compact('patients'));
+    }
 
-    $patients = User::where('created_by', $id)
-                   ->whereHas('role', function($query) {
-                       $query->where('name', 'patient');
-                   })->count();
+    public function showMedecin($id)
+    {
+        $medecin = User::whereHas('role', function ($query) {
+            $query->where('name', 'medecin');
+        })->findOrFail($id);
 
-    return view('admin.medecin-show', compact('medecin', 'patients'));
-}
-public function showPatient($id)
-{
-    $patient = User::whereHas('role', function($query) {
-        $query->where('name', 'patient');
-    })->findOrFail($id);
+        $patients = User::where('created_by', $id)
+            ->whereHas('role', function ($query) {
+                $query->where('name', 'patient');
+            })->count();
 
-    $consultations = Consultation::where('patient_id', $id)
-                               ->with('medecin')
-                               ->orderBy('date_consultation', 'desc')
-                               ->get();
+        return view('admin.medecin-show', compact('medecin', 'patients'));
+    }
 
-    return view('admin.patient-show', compact('patient', 'consultations'));
+    public function showPatient($id)
+    {
+        $patient = User::whereHas('role', function ($query) {
+            $query->where('name', 'patient');
+        })->findOrFail($id);
+
+        $consultations = Consultation::where('patient_id', $id)
+            ->with('medecin')
+            ->orderBy('date_consultation', 'desc')
+            ->get();
+
+        return view('admin.patient-show', compact('patient', 'consultations'));
 
 
+    }
 }

@@ -25,13 +25,13 @@ use App\Http\Controllers\ProfilController;
 
 Route::get('/', function () {
     return view('welcome');})->name('welcome');
-
-Auth::routes();
+/*
+Auth::routes();*/
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Routes Admin
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/create-medecin', [AdminController::class, 'createMedecinForm'])->name('admin.create.medecin');
     Route::post('/create-medecin', [AdminController::class, 'createMedecin'])->name('admin.create.medecin.store');
@@ -55,7 +55,7 @@ Route::get('/redirect-after-login', function () {
 })->name('redirect.after.login');
 
 
-Route::prefix('admin')->middleware(['auth', 'admin'])->as('admin.')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function () {
     // ... routes existantes ...
     Route::get('/medecins', [AdminController::class, 'listeMedecins'])->name('medecins');
     Route::get('/medecins/{id}', [AdminController::class, 'showMedecin'])->name('medecin.show');
@@ -64,7 +64,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->as('admin.')->group(funct
 });
 
 // Routes Médecin
-Route::prefix('medecin')->middleware(['auth', 'medecin'])->group(function () {
+Route::prefix('medecin')->middleware(['auth', 'medecin'])->prefix('medecin')->group(function () {
     Route::get('/dashboard', [MedecinController::class, 'dashboard'])->name('medecin.dashboard');
     Route::get('/create-patient', [MedecinController::class, 'createPatientForm'])->name('medecin.create.patient');
     Route::post('/create-patient', [MedecinController::class, 'createPatient'])->name('medecin.create.patient.store');
@@ -72,7 +72,7 @@ Route::prefix('medecin')->middleware(['auth', 'medecin'])->group(function () {
     Route::get('/patients/{id}', [MedecinController::class, 'showPatient'])->name('medecin.patient.show');
 });
 // Routes Patient
-Route::prefix('patient')->middleware(['auth', 'patient'])->group(function () {
+Route::prefix('patient')->middleware(['auth', 'patient'])->prefix('patient')->group(function () {
     Route::get('/dashboard', [PatientController::class, 'dashboard'])->name('patient.dashboard');
     Route::get('/consultations', [PatientController::class, 'mesConsultations'])->name('patient.consultations');
     Route::get('/rendezvous', [PatientController::class, 'mesRendezVous'])->name('patient.rendezvous');
