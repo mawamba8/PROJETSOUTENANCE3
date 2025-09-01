@@ -18,7 +18,7 @@ class PatientController extends Controller
 
         $patient = auth()->user();
 
-        dd($patient);
+       
         $prochainRdv = RendezVous::where('patient_id', $patient->id)
                                ->where('date_rdv', '>=', now())
                                ->orderBy('date_rdv')
@@ -34,7 +34,7 @@ class PatientController extends Controller
     public function mesConsultations()
     {
         $consultations = Consultation::where('patient_id', auth()->id())
-->with('medecin')
+                                    ->with('medecin')
                                    ->orderBy('date_consultation', 'desc')
                                    ->get();
 

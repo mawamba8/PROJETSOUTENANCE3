@@ -38,19 +38,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function redirectTo()
+   protected function authenticated(Request $request, $user)
 {
-    $role = auth()->user()->role->name; // récupère le rôle de l’utilisateur connecté
+    $roleName = $user->role->name ?? 'patient'; // par défaut patient
 
-    switch ($role) {
-        case 'admin':
-            return '/admin/dashboard'; // route de l’admin
-        case 'medecin':
-            return '/medecin/dashboard'; // route du médecin
-        case 'patient':
-            return '/patient/dashboard'; // route du patient
-        default:
-            return '/home'; // page par défaut si aucun rôle
-}
+    if ($user->isAdmin()) {
+        return redirect()->route('admin.dashboard');
+    } elseif ($user->isMedecin()) {
+        return redirect()->route('medecin.dashboard');
+    } elseif ($user->isPatient()) {
+        return redirect()->route('patient.dashboard');
+    } 
+    return redirect('/home');
 }
 }

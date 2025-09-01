@@ -20,12 +20,14 @@ class CreateRolesTable extends Migration
             $table->timestamps();
         });
        // Insert default roles
-    DB::table('roles')->insert([
+    /* DB::table('roles')->insert([
         ['name' => 'admin'],
         ['name' => 'medecin'],
         ['name' => 'patient']
-    ]);
-
+    ]);*/
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
+        });
     }
 
     /**
@@ -37,4 +39,4 @@ class CreateRolesTable extends Migration
     {
         Schema::dropIfExists('roles');
     }
-}
+};

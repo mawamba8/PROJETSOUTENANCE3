@@ -213,7 +213,7 @@
             </a>
 
             <div class="mt-4">
-                <a class="nav-link {{ Request::is('profil*') ? 'active' : '' }}" href="{{ route('profil.edit') }}">
+                <a class="nav-link {{ Request::is('profil*') ? 'active' : '' }}" href="{{ route('profil.edit', Auth::user()->id) }}">
                     <i class="fas fa-user-cog"></i>
                     <span>👤Profil</span>
                 </a>
@@ -250,7 +250,7 @@
                             <span class="ms-2 d-none d-lg-inline">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="{{ route('profil.edit') }}">
+                            <li><a class="dropdown-item" href="{{ route('profil.edit', Auth::user()->id) }}">
                                 <i class="fas fa-user-cog me-2"></i>Profil
                             </a></li>
                             <li><hr class="dropdown-divider"></li>

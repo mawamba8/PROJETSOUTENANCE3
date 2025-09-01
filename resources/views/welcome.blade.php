@@ -6,11 +6,29 @@
     <title>Carnet Médical Numérique</title>
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Navbar transparente par défaut */
+        .navbar {
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+            background-color: rgba(0, 123, 255, 0.3); /* bleu clair semi-transparent */
+        }
+        /* Navbar après scroll */
+        .navbar.scrolled {
+            background-color: #0d6efd !important; /* bleu bootstrap plein */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Décalage du contenu pour compenser la navbar fixed */
+        body {
+            padding-top: 70px;
+        }
+    </style>
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('welcome') }}">
                 🏥 Carnet Médical
@@ -23,15 +41,21 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="container text-center py-5 flex-grow-1" style= "height: 70vh; background-image: url('/assets/image/back.webp'); background-size: cover; background-position: center; background-repeat: no-repeat; background-size:cover;">
-    
-        <h1 class="display-3 fw-bold mb-4 text-primary">Bienvenue sur votre Carnet Médical Numérique</h1>
-        <p class="lead text-muted mt-3">
-            Gérez vos rendez-vous médicaux, suivez vos consultations et gardez votre historique de santé en toute simplicité.
-        </p>
-        <div class="mt-5">
-            <a href="{{ route('login') }}" class="btn btn-primary btn-lg me-2 px-4">Accéder à mon espace</a>
-            <a href="{{ route('register') }}" class="btn btn-outline-primary btn-lg px-4">Créer un compte</a>
+    <section class="hero-section d-flex align-items-center text-center text-white" 
+        style="background-image: url('{{ asset('assets/image/back.webp') }}'); 
+               background-size: cover; 
+               background-position: center; 
+               min-height: 100vh;">
+
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-4">Bienvenue sur votre Carnet Médical Numérique</h1>
+            <p class="lead">
+                Gérez vos rendez-vous médicaux, suivez vos consultations et gardez votre historique de santé en toute simplicité.
+            </p>
+            <div class="mt-5">
+                <a href="{{ route('login') }}" class="btn btn-primary btn-lg me-2 px-4">Accéder à mon espace</a>
+                <a href="{{ route('register') }}" class="btn btn-outline-light btn-lg px-4">Créer un compte</a>
+            </div>
         </div>
     </section>
 
@@ -70,25 +94,26 @@
             </div>
         </div>
     </section>
-<!--a propos de nous -->
-<section class="about-section py-5">
-  <div class="container">
-    <div class="row align-center">
-    <div class="col-md-8">
-    <h2 class="mb-4"><span style="color: blue;">À propos de nous</span></h2>
-    <p class="lead text-muted">
-      GFI SARL est une entreprise leader spécialisée dans la vente et la fabrication de matériel de plomberie.  
-      Nous fournissons des pièces de haute qualité adaptées aux besoins des professionnels et particuliers.  
-      Notre mission est de garantir durabilité, fiabilité et performance dans toutes vos installations.  
-      Avec une équipe technique experte, nous accompagnons chaque projet de sa conception à sa réalisation.
-    </p>
-  </div>
-  <div class="col-md-4 text-end">
-    <img src="{{asset('assets\image\OIP.webp') }}" alt="a propos" class="img-fluid rounded shadow" style="max-width:350px;">
-  </div>
-   </div>
-    </div>
-</section>
+
+    <!-- About -->
+    <section class="about-section py-5">
+      <div class="container">
+        <div class="row align-center">
+          <div class="col-md-8">
+            <h2 class="mb-4"><span style="color: blue;">À propos de nous</span></h2>
+            <p class="lead text-muted">
+              GFI SARL est une entreprise leader spécialisée dans la vente et la fabrication de matériel de plomberie.  
+              Nous fournissons des pièces de haute qualité adaptées aux besoins des professionnels et particuliers.  
+              Notre mission est de garantir durabilité, fiabilité et performance dans toutes vos installations.  
+              Avec une équipe technique experte, nous accompagnons chaque projet de sa conception à sa réalisation.
+            </p>
+          </div>
+          <div class="col-md-4 text-end">
+            <img src="{{asset('assets/image/OIP.webp') }}" alt="a propos" class="img-fluid rounded shadow" style="max-width:350px;">
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Call to Action -->
     <section class="text-center py-5 bg-primary text-white">
@@ -107,5 +132,17 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script pour changer la navbar au scroll -->
+    <script>
+        window.addEventListener("scroll", function() {
+            let navbar = document.querySelector(".navbar");
+            if (window.scrollY > 50) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+        });
+    </script>
 </body>
 </html>

@@ -73,7 +73,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role->name === 'admin';
+        return $this->role_id === 1;
     }
 
     /**
@@ -81,15 +81,15 @@ class User extends Authenticatable
      */
     public function isMedecin()
     {
-        return $this->role->name === 'medecin';
+         return $this->role_id === 2;
     }
 
     /**
      * Vérifie si l’utilisateur est patient.
      */
-    public function ispatient()
+    public function isPatient()
     {
-        return $this->role->name === 'patient';
+        return $this->role_id === 3;
     }
 
     // Relation pour les médecins qui créent des patients
