@@ -26,7 +26,7 @@ class User extends Authenticatable
         'role_id',
         'telephone',
         'date_naissance',
-        'adresse', 
+        'adresse',
         'specialite',
         'created_by'
 
@@ -50,10 +50,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-     /**
+
+    /**
      * Vérifie si l’utilisateur est admin.
      */
-        protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
@@ -67,7 +68,7 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class) ;
+        return $this->belongsTo(Role::class);
     }
 
     public function isAdmin()
@@ -82,14 +83,16 @@ class User extends Authenticatable
     {
         return $this->role->name === 'medecin';
     }
- /**
+
+    /**
      * Vérifie si l’utilisateur est patient.
      */
     public function ispatient()
-{
+    {
         return $this->role->name === 'patient';
     }
- // Relation pour les médecins qui créent des patients
+
+    // Relation pour les médecins qui créent des patients
     public function patientsCreated()
     {
         return $this->hasMany(User::class, 'created_by');
@@ -102,7 +105,7 @@ class User extends Authenticatable
     }
 
     //model rendez-vous et consultations
-     public function medecin()
+    public function medecin()
     {
         return $this->belongsTo(User::class, 'created_by');
     }

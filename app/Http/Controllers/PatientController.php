@@ -15,16 +15,20 @@ class PatientController extends Controller
 
     public function dashboard()
     {
+
         $patient = auth()->user();
+
+        dd($patient);
         $prochainRdv = RendezVous::where('patient_id', $patient->id)
                                ->where('date_rdv', '>=', now())
                                ->orderBy('date_rdv')
                                ->first();
 
         $consultations = Consultation::where('patient_id', $patient->id)
-                                   ->count();
-
-        return view('patient.dashboard', compact('prochainRdv', 'consultations'));
+                                   ->get();
+        $rendezvous = [];
+        $notifications = [];
+        return view('patient.dashboard', compact('prochainRdv', 'consultations', 'rendezvous', 'notifications'));
     }
 
     public function mesConsultations()

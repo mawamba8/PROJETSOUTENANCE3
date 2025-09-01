@@ -19,12 +19,12 @@
             --warning: #ffc107;
             --danger: #dc3545;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8f9fa;
         }
-        
+
         /* Sidebar */
         .sidebar {
             background: linear-gradient(180deg, var(--primary) 0%, #1a5276 100%);
@@ -36,7 +36,7 @@
             z-index: 1000;
             padding-top: 20px;
         }
-        
+
         .sidebar .nav-link {
             color: rgba(255, 255, 255, 0.8);
             padding: 0.8rem 1rem;
@@ -44,17 +44,17 @@
             border-radius: 5px;
             transition: all 0.3s;
         }
-        
+
         .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
             background: rgba(255, 255, 255, 0.1);
             color: white;
         }
-        
+
         .sidebar .nav-link i {
             width: 25px;
         }
-        
+
         /* Main content */
         .main-content {
             margin-left: 250px;
@@ -62,14 +62,14 @@
             transition: all 0.3s;
             min-height: 100vh;
         }
-        
+
         /* Navbar */
         .navbar {
             background: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             padding: 1rem 2rem;
         }
-        
+
         /* Cards */
         .medical-card {
             background: white;
@@ -79,11 +79,11 @@
             transition: transform 0.3s;
             margin-bottom: 20px;
         }
-        
+
         .medical-card:hover {
             transform: translateY(-2px);
         }
-        
+
         .card-header-medical {
             background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
@@ -91,33 +91,33 @@
             padding: 1rem 1.5rem;
             border: none;
         }
-        
+
         /* Buttons */
         .btn-medical {
             background-color: var(--primary);
             border-color: var(--primary);
             color: white;
         }
-        
+
         .btn-medical:hover {
             background-color: #236685;
             border-color: #236685;
             color: white;
         }
-        
+
         /* Badges */
         .badge-medical {
             background-color: var(--secondary);
             color: var(--dark);
         }
-        
+
         /* Logo */
         .app-logo {
             text-align: center;
             padding: 1rem;
             margin-bottom: 2rem;
         }
-        
+
         .app-logo i {
             font-size: 2.5rem;
             color: white;
@@ -130,37 +130,37 @@
             justify-content: center;
             margin: 0 auto;
         }
-        
+
         .app-logo h4 {
             color: white;
             margin-top: 1rem;
             font-weight: 300;
         }
-        
+
         /* User dropdown */
         .user-dropdown .dropdown-toggle::after {
             display: none;
         }
-        
+
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
                 width: 80px;
                 text-align: center;
             }
-            
+
             .sidebar .nav-link span {
                 display: none;
             }
-            
+
             .sidebar .nav-link i {
                 margin-right: 0;
             }
-            
+
             .main-content {
                 margin-left: 80px;
             }
-            
+
             .app-logo h4 {
                 display: none;
             }
@@ -175,9 +175,9 @@
             <i class="fas fa-heartbeat"></i>
             <h4>Carnet Médical</h4>
         </div>
-        
+
         <nav class="nav flex-column">
-            <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+            <a class="nav-link {{ Request::is('patient/dashboard') ? 'active' : '' }}" href="{{ route('patient.dashboard') }}">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>📊 Tableau de bord</span>
             </a>
@@ -191,36 +191,36 @@
                 <i class="fas fa-user-injured"></i>
                 <span>🧑‍🤝‍🧑Patients</span>
             </a>
-            
+
             <a class="nav-link {{ Request::is('rendezvous*') ? 'active' : '' }}" href="{{ route('rendezvous.index') }}">
                 <i class="fas fa-calendar-check"></i>
                 <span>📅 Rendez-vous</span>
             </a>
-            
+
             <a class="nav-link {{ Request::is('consultations*') ? 'active' : '' }}" href="{{ route('consultations.index') }}">
                 <i class="fas fa-stethoscope"></i>
                 <span>📝Consultation</span>
             </a>
-            
+
             <a class="nav-link {{ Request::is('traitements*') ? 'active' : '' }}" href="{{ route('traitements.index') }}">
                 <i class="fas fa-pills"></i>
                 <span>🩺 Traitement</span>
             </a>
-            
+
             <a class="nav-link {{ Request::is('carnets*') ? 'active' : '' }}" href="{{ route('carnets.index') }}">
                 <i class="fas fa-folder-medical"></i>
                 <span>📔carnets</span>
             </a>
-            
+
             <div class="mt-4">
                 <a class="nav-link {{ Request::is('profil*') ? 'active' : '' }}" href="{{ route('profil.edit') }}">
                     <i class="fas fa-user-cog"></i>
                     <span>👤Profil</span>
                 </a>
-                
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <a class="nav-link" href="{{ route('logout') }}" 
+                    <a class="nav-link" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); this.closest('form').submit();">
                         <i class="fas fa-sign-out-alt"></i>
                         <span> 🔓Déconnexion</span>
@@ -238,7 +238,7 @@
                 <button class="btn btn-sm d-md-none" type="button">
                     <i class="fas fa-bars"></i>
                 </button>
-                
+
                 <div class="d-flex align-items-center ms-auto">
                     <div class="dropdown user-dropdown">
                         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
@@ -257,7 +257,7 @@
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <a class="dropdown-item" href="{{ route('logout') }}" 
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault(); this.closest('form').submit();">
                                         <i class="fas fa-sign-out-alt me-2"></i>Déconnexion
                                     </a>

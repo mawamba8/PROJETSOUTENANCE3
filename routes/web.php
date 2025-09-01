@@ -37,26 +37,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->prefix('admin')->group(fu
     Route::post('/create-medecin', [AdminController::class, 'createMedecin'])->name('admin.create.medecin.store');
     Route::get('/create-patient', [AdminController::class, 'createPatientForm'])->name('admin.create.patient');
     Route::post('/create-patient', [AdminController::class, 'createPatient'])->name('admin.create.patient.store');
-});
 
-// Redirection après login basée sur le rôle
-Route::get('/redirect-after-login', function () {
-    $user = Auth::user();
-
-    if ($user->isAdmin()) {
-        return redirect()->route('admin.dashboard');
-    } elseif ($user->isMedecin()) {
-        return redirect()->route('medecin.dashboard');
-    } elseif ($user->isPatient()) {
-        return redirect()->route('patient.dashboard');
-    }
-
-    return redirect('/home');
-})->name('redirect.after.login');
-
-
-Route::prefix('admin')->middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function () {
-    // ... routes existantes ...
     Route::get('/medecins', [AdminController::class, 'listeMedecins'])->name('medecins');
     Route::get('/medecins/{id}', [AdminController::class, 'showMedecin'])->name('medecin.show');
     Route::get('/patients', [AdminController::class, 'listePatients'])->name('patients');
@@ -83,71 +64,13 @@ Route::prefix('patient')->middleware(['auth', 'patient'])->prefix('patient')->gr
 
 });
 
-// Redirection après login
-Route::get('/redirect-after-login', function () {
-    $user = Auth::user();
-
-    if ($user->isAdmin()) {
-        return redirect()->route('admin.dashboard');
-    } elseif ($user->isMedecin()) {
-        return redirect()->route('medecin.dashboard');
-    } elseif ($user->isPatient()) {
-        return redirect()->route('patient.dashboard');
-    }
-
-     return redirect('/home');
-})->name('redirect.after.login');
-
-// Routes Rendez-vous
+/*// Routes Rendez-vous
 Route::resource('rendezvous', RendezVousController::class)->middleware('auth');
 Route::post('rendezvous/{rendezVous}/confirm', [RendezVousController::class, 'confirm'])->name('rendezvous.confirm')->middleware('auth');
 Route::post('rendezvous/{rendezVous}/cancel', [RendezVousController::class, 'cancel'])->name('rendezvous.cancel')->middleware('auth');
 
 // Routes Consultations
-Route::resource('consultations', ConsultationController::class)->middleware('auth');
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-
-Route::get('/test-db', function () {
-    try {
-        // Test de connexion à la base de données
-        \DB::connection()->getPdo();
-        echo "Connexion à la base de données réussie!<br>";
-
-        // Test des modèles
-        $users = \App\Models\User::count();
-        echo "Nombre d'utilisateurs: " . $users . "<br>";
-
-        $roles = \App\Models\Role::all();
-        echo "Rôles existants: ";
-        foreach ($roles as $role) {
-            echo $role->name . " ";
-        }
-        echo "<br>";
-
-        echo "✅ Tous les tests sont passés avec succès!";
-        } catch (\Exception $e) {
-        die("Erreur de connexion à la base de données: " . $e->getMessage());
-    }
-});
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware('auth');
-
-// Médecin
-Route::get('/medecin/dashboard', function () {
-    return view('medecin.dashboard');
-})->middleware('auth');
-
-// Patient
-Route::get('/patient/dashboard', function () {
-    return view('patient.dashboard');
-})->middleware('auth');
-
+Route::resource('consultations', ConsultationController::class)->middleware('auth');*/
 
 Route::get('/medecins',[MedecinController::class,'index'])->name('medecins.index');
 Route::post('/medecins',[MedecinController::class,'store'])->name('medecins.store');
@@ -161,11 +84,11 @@ Route::post('/rendezvous',[Rendez_VousController::class,'store'])->name('rendezv
 Route::get('/consultations',[ConsultationController::class,'index'])->name('consultations.index');
 Route::post('/consultations',[ConsultationController::class,'store'])->name('consultations.store');
 
-Route::get('/traitements',[TraitementsController::class,'index'])->name('traitements.index');
+/*Route::get('/traitements',[TraitementsController::class,'index'])->name('traitements.index');
 Route::post('/traitements',[TraitementsController::class,'store'])->name('traitements.store');
 
 Route::get('/carnets',[CarnetsController::class,'index'])->name('carnets.index');
-Route::post('/carnets',[CarnetsController::class,'store'])->name('carnets.store');
+Route::post('/carnets',[CarnetsController::class,'store'])->name('carnets.store');*/
 
 Route::get('/profil',[ProfilController::class,'index'])->name('profil.index');
 Route::post('/profil/edit',[ProfilController::class,'edit'])->name('profil.edit');
@@ -183,23 +106,23 @@ Route::put('/patients/{patient}',[PatientController::class,'update'])->name('pat
 Route::delete('/patients/{patient}',[PatientController::class,'destroy'])->name('patients.destroy');
 Route::get('/patients/{patient}',[PatientController::class,'show'])->name('patients.show');
 
-Route::get('/rendezvous/create', [RendezvouSController::class, 'create'])->name('rendezvous.create');
+/*Route::get('/rendezvous/create', [RendezvouSController::class, 'create'])->name('rendezvous.create');
 Route::get('/rendezvous/{id}', [RendezvouSController::class, 'show'])->name('rendezvous.show');
 Route::get('/rendezvous/{id}/edit', [RendezvouSController::class, 'edit'])->name('rendezvous.edit');
 Route::put('/rendezvous/{id}', [RendezvouSController::class, 'update'])->name('rendezvous.update');
-Route::delete('/rendezvous/{id}', [RendezvouSController::class, 'destroy'])->name('rendezvous.destroy');
+Route::delete('/rendezvous/{id}', [RendezvouSController::class, 'destroy'])->name('rendezvous.destroy');*/
 
 Route::get('/consultations/create',[ConsultationController::class,'create'])->name('consultations.create');
 Route::get('/consultations/{consultation}/edit',[ConsultationController::class,'edit'])->name('consultations.edit');
 Route::put('/consultations/{consultation}',[ConsultationController::class,'update'])->name('consultations.update');
 Route::delete('/consultations/{consultation}',[ConsultationController::class,'destroy'])->name('consultations.destroy');
 Route::get('/consultations/{consultation}',[ConsultationController::class,'show'])->name('consultations.show');
-
+/*
 Route::get('/carnets/create',[CarnetsController::class,'create'])->name('carnets.create');
 Route::get('/carnets/{carnet}/edit',[CarnetsController::class,'edit'])->name('carnets.edit');
 Route::put('/carnets/{carnet}',[CarnetsController::class,'update'])->name('carnets.update');
 Route::delete('/carnets/{carnet}',[CarnetsController::class,'destroy'])->name('carnets.destroy');
-Route::get('/carnets/{carnet}',[CarnetsController::class,'show'])->name('carnets.show');
+Route::get('/carnets/{carnet}',[CarnetsController::class,'show'])->name('carnets.show');*/
 
 require __DIR__.'/auth.php';
 

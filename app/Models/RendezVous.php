@@ -21,6 +21,8 @@ class RendezVous extends Model
         'heure_rdv'=> 'time',
     ];
 
+    protected $table = "rendez_vous";
+
     const STATUTS = [
         'planifié' => 'Planifié',
         'confirmé' => 'Confirmé',

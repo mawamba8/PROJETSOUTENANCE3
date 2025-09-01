@@ -13,7 +13,7 @@
                     @foreach($rendezvous as $rdv)
                         <p>{{ $rdv->date }} avec Dr. {{ $rdv->medecin->name }}</p>
                     @endforeach
-                    <a href="{{ route('rendezvous.create') }}" class="btn btn-primary">Prendre un rendez-vous</a>
+                    <a href="{{--{{ route('rendezvous.create') }}--}}" class="btn btn-primary">Prendre un rendez-vous</a>
                 </div>
             </div>
         </div>

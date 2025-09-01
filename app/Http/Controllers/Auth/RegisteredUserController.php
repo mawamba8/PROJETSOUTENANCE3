@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
 
 
-            // Assigner le role de patient à l'utilisateur
+            // Assigner le role de patient par défaut
             'role_id'=> 3,
         ]);
 

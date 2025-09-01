@@ -16,9 +16,12 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
 
             $table->string('password');
-            
+
             // rôle utilisateur : patient, medecin, admin
-            $table->enum('role', ['patient','medecin','admin'])->default('patient');
+            // Si tu met role_id alors tu n'a plus besoin de ceci
+            //$table->enum('role', ['patient','medecin','admin'])->default('patient');
+
+
             $table->unsignedBigInteger('created_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
