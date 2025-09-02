@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         ];
         
         foreach ($roles as $role) {
-            Role::firstOrCreate(['name' => $role]);
+            Role::firstOrCreate( $role);
 
         }
 

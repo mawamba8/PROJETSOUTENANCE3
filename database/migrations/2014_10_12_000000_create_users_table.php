@@ -13,7 +13,13 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('telephone')->nullable();
+            $table->string('specialite')->nullable(); // si c'est pour le médecin
+            $table->date('date_naissance')->nullable(); // si c'est pour le patient
+            $table->string('adresse')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+
+
 
             $table->string('password');
 
