@@ -41,6 +41,7 @@ class AdminController extends Controller
             'telephone' => 'required|string',
             'specialite' => 'required|string',
         ]);
+
         $roleMedecin = Role::where('name', 'medecin')->first();
 
         User::create([
