@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Patient;
 use App\Models\Consultation;
 use App\Models\RendezVous;
 use Illuminate\Http\Request;
@@ -76,6 +76,12 @@ class PatientController extends Controller
 
     $pdfController = new PdfController();
     return $pdfController->previewCarnetMedical();
+}
+
+public function index()
+{
+    $patients = Patient::all();
+    return view('patients.index', compact('patients'));
 }
 
 

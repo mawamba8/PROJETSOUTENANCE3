@@ -40,7 +40,7 @@ Route::get('/redirect-after-login', function () {
 })->name('redirect.after.login');
 
 /*
-|--------------------------------------------------------------------------
+|-------------------------------------------------------------------------
 | Admin Routes
 |--------------------------------------------------------------------------
 */
@@ -71,6 +71,7 @@ Route::prefix('medecin')->middleware(['auth', 'medecin'])->group(function () {
     Route::post('/create-patient', [MedecinController::class, 'createPatient'])->name('medecin.create.patient.store');
     Route::get('/patients', [MedecinController::class, 'mesPatients'])->name('medecin.patients');
     Route::get('/patients/{id}', [MedecinController::class, 'showPatient'])->name('medecin.patient.show');
+    
 });
 
 
@@ -87,6 +88,8 @@ Route::prefix('patient')->middleware(['auth', 'patient'])->group(function () {
     Route::get('/profil', [PatientController::class, 'profil'])->name('patient.profil');
     Route::get('/carnet/preview', [PatientController::class, 'previewCarnet'])->name('patient.preview.carnet');
     Route::get('/carnet/download', [PatientController::class, 'downloadCarnet'])->name('patient.download.carnet');
+    Route::get('/patients',[PatientController::class,'index'])->name('patients.index');
+
 });
 
 
@@ -116,6 +119,8 @@ Route::post('/traitements',[TraitementsController::class,'store'])->name('traite
 Route::get('/carnets',[CarnetsController::class,'index'])->name('carnets.index');
 Route::post('/carnets',[CarnetsController::class,'store'])->name('carnets.store');*/
 
+
+
 Route::get('/profil',[ProfilController::class,'index'])->name('profil.index');
 Route::post('/profil/edit',[ProfilController::class,'edit'])->name('profil.edit');
 Route::put('/profil/{profil}',[ProfilController::class,'update'])->name('profil.update');
@@ -131,6 +136,8 @@ Route::get('/patients/{patient}/edit',[PatientController::class,'edit'])->name('
 Route::put('/patients/{patient}',[PatientController::class,'update'])->name('patients.update');
 Route::delete('/patients/{patient}',[PatientController::class,'destroy'])->name('patients.destroy');
 Route::get('/patients/{patient}',[PatientController::class,'show'])->name('patients.show');
+
+
 
 /*Route::get('/rendezvous/create', [RendezvouSController::class, 'create'])->name('rendezvous.create');
 Route::get('/rendezvous/{id}', [RendezvouSController::class, 'show'])->name('rendezvous.show');
@@ -156,6 +163,8 @@ Route::resource('consultations', ConsultationController::class)->middleware('aut
 Route::resource('traitements', TraitementController::class)->middleware('auth');
 Route::resource('carnets', Carnet_MedicalController::class)->middleware('auth');
 Route::resource('profil', ProfilController::class)->middleware('auth');
+
+
 
 // Dashboard générique
 Route::get('/dashboard', function () {

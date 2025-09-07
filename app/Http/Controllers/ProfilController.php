@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User; 
 
 class ProfilController extends Controller
 {
@@ -12,7 +13,11 @@ class ProfilController extends Controller
         return view('profile.index');
         // crée resources/views/profil/index.blade.php
     }
-
+ public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        return view('profil.edit', compact('user'));
+    }
     // Mettre à jour le profil
     public function update(Request $request)
     {

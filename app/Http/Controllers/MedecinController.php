@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use App\Models\Consultation;
 use App\Models\RendezVous;
 use App\Models\Role;
@@ -36,9 +37,10 @@ class MedecinController extends Controller
 
     public function createPatientForm()
     {
-        return view('medecin.create-patient');
+        return view('medecin.create');
     }
 
+    
     public function createPatient(Request $request)
     {
         $request->validate([
@@ -66,6 +68,40 @@ return redirect()->route('medecin.dashboard')
                        ->with('success', 'Patient créé avec succès. Code: ' . $patient->code_patient);
     }
 
+
+   /* public function store(Request $request)
+    {
+         $request->validate([
+            'id' => 'required|exists:patients,id',
+            'email' => 'required',
+            //'user_id' => 'required|user',
+            'nom' => 'required|string',
+            'date_naissance' => 'nullable',
+            'numero_dossier' => 'nullable',
+            'antecedents_medicaux' => 'nullable',
+            'traitements_en_cours' => 'nullable|string',
+            'adresse ' => 'nullable|string',
+            'telephone ' => 'nullable|string',
+            'sexe ' => 'nullable|string',
+            'notes ' => 'nullable|string',
+        ]);
+
+        $medecin = Patient::create([
+            'patient_id' => $request->patient_id,
+            //'medecin_id' => Auth::id(),
+            'date_naissance' => $request->date_naissance,
+            'numero_dossier' => $request->numero_dossier,
+            'antecedents_medicaux' => $request->antecedents_medicaux,
+            'adresse' => $request->adresse,
+            'telephone' => $request->telephone,
+            'sexe' => $request->sexe,
+            'notes' => $request->notes,
+        ]);
+        return redirect()->route('p.dashboard')
+                       ->with('success', 'Patient créé avec succès. Code: ' . $patient->code_patient);
+    }*/
+
+
     public function mesPatients()
     {
         $patients = User::where('created_by', auth()->id())
@@ -89,5 +125,7 @@ return redirect()->route('medecin.dashboard')
 
         return view('medecin.patient-show', compact('patient', 'consultations'));
     }
+
+    
 }
 

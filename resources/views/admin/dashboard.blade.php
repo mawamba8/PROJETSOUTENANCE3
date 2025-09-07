@@ -2,18 +2,7 @@
 
 @section('content')
 
-css
-.btn-warning {
-    background-color: #ffc107;
-    border-color: #ffc107;
-    color: #000;
-}
 
-.btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    color: #fff;
-}
 
 <div class="container">
     <div class="row justify-content-center">
