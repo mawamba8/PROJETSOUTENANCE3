@@ -112,6 +112,38 @@ return redirect()->route('medecin.dashboard')
         return view('medecin.patients', compact('patients'));
     }
 
+    public function editPatientForm($id)
+{
+    $patient = User::where('id', $id)
+                   ->where('created_by', auth()->id())
+                   ->firstOrFail();
+
+    return view('medecin.edit-patient', compact('patient'));
+}
+
+public function updatePatient(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,'.$id,
+        'telephone' => 'required|string',
+        'date_naissance' => 'required|date',
+        'adresse' => 'required|string',
+    ]);
+
+    $patient = User::findOrFail($id);
+
+    $patient->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'telephone' => $request->telephone,
+        'date_naissance' => $request->date_naissance,
+        'adresse' => $request->adresse,
+    ]);
+
+    return redirect()->route('medecin.patients')->with('success', 'Patient mis à jour avec succès');
+}
+
     public function showPatient($id)
     {
         $patient = User::where('id', $id)

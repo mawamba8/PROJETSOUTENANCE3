@@ -71,7 +71,11 @@ Route::prefix('medecin')->middleware(['auth', 'medecin'])->group(function () {
     Route::post('/create-patient', [MedecinController::class, 'createPatient'])->name('medecin.create.patient.store');
     Route::get('/patients', [MedecinController::class, 'mesPatients'])->name('medecin.patients');
     Route::get('/patients/{id}', [MedecinController::class, 'showPatient'])->name('medecin.patient.show');
-    
+
+   
+    Route::put('/patients/{id}', [MedecinController::class, 'updatePatient'])->name('medecin.patients.update');
+    Route::get('medecin/patients/{id}/edit', [MedecinController::class, 'editPatientForm'])->name('medecin.patient.edit');
+
 });
 
 
@@ -93,13 +97,6 @@ Route::prefix('patient')->middleware(['auth', 'patient'])->group(function () {
 });
 
 
-/*// Routes Rendez-vous
-Route::resource('rendezvous', RendezVousController::class)->middleware('auth');
-Route::post('rendezvous/{rendezVous}/confirm', [RendezVousController::class, 'confirm'])->name('rendezvous.confirm')->middleware('auth');
-Route::post('rendezvous/{rendezVous}/cancel', [RendezVousController::class, 'cancel'])->name('rendezvous.cancel')->middleware('auth');
-
-// Routes Consultations
-Route::resource('consultations', ConsultationController::class)->middleware('auth');*/
 
 Route::get('/medecins',[MedecinController::class,'index'])->name('medecins.index');
 Route::post('/medecins',[MedecinController::class,'store'])->name('medecins.store');
@@ -112,12 +109,6 @@ Route::post('/rendezvous',[Rendez_VousController::class,'store'])->name('rendezv
 
 Route::get('/consultations',[ConsultationController::class,'index'])->name('consultations.index');
 Route::post('/consultations',[ConsultationController::class,'store'])->name('consultations.store');
-
-/*Route::get('/traitements',[TraitementsController::class,'index'])->name('traitements.index');
-Route::post('/traitements',[TraitementsController::class,'store'])->name('traitements.store');
-
-Route::get('/carnets',[CarnetsController::class,'index'])->name('carnets.index');
-Route::post('/carnets',[CarnetsController::class,'store'])->name('carnets.store');*/
 
 
 
@@ -139,23 +130,11 @@ Route::get('/patients/{patient}',[PatientController::class,'show'])->name('patie
 
 
 
-/*Route::get('/rendezvous/create', [RendezvouSController::class, 'create'])->name('rendezvous.create');
-Route::get('/rendezvous/{id}', [RendezvouSController::class, 'show'])->name('rendezvous.show');
-Route::get('/rendezvous/{id}/edit', [RendezvouSController::class, 'edit'])->name('rendezvous.edit');
-Route::put('/rendezvous/{id}', [RendezvouSController::class, 'update'])->name('rendezvous.update');
-Route::delete('/rendezvous/{id}', [RendezvouSController::class, 'destroy'])->name('rendezvous.destroy');*/
-
 Route::get('/consultations/create',[ConsultationController::class,'create'])->name('consultations.create');
 Route::get('/consultations/{consultation}/edit',[ConsultationController::class,'edit'])->name('consultations.edit');
 Route::put('/consultations/{consultation}',[ConsultationController::class,'update'])->name('consultations.update');
 Route::delete('/consultations/{consultation}',[ConsultationController::class,'destroy'])->name('consultations.destroy');
 Route::get('/consultations/{consultation}',[ConsultationController::class,'show'])->name('consultations.show');
-/*
-Route::get('/carnets/create',[CarnetsController::class,'create'])->name('carnets.create');
-Route::get('/carnets/{carnet}/edit',[CarnetsController::class,'edit'])->name('carnets.edit');
-Route::put('/carnets/{carnet}',[CarnetsController::class,'update'])->name('carnets.update');
-Route::delete('/carnets/{carnet}',[CarnetsController::class,'destroy'])->name('carnets.destroy');
-Route::get('/carnets/{carnet}',[CarnetsController::class,'show'])->name('carnets.show');*/
 
 
 Route::resource('rendezvous', Rendez_VousController::class)->middleware('auth');
