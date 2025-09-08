@@ -24,20 +24,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-// Redirection après login
-Route::get('/redirect-after-login', function () {
-    $user = Auth::user();
-
-    if ($user->isAdmin()) {
-        return redirect()->route('admin.dashboard');
-    } elseif ($user->isMedecin()) {
-        return redirect()->route('medecin.dashboard');
-    } elseif ($user->isPatient()) {
-        return redirect()->route('patient.dashboard');
-    }
-
-    return redirect('/home');
-})->name('redirect.after.login');
 
 /*
 |-------------------------------------------------------------------------
@@ -74,8 +60,9 @@ Route::prefix('medecin')->middleware(['auth', 'medecin'])->group(function () {
 
    
     Route::put('/patients/{id}', [MedecinController::class, 'updatePatient'])->name('medecin.patients.update');
+    Route::delete('/patients/{id}', [MedecinController::class, 'destroyPatient'])->name('medecin.patient.destroy');
     Route::get('medecin/patients/{id}/edit', [MedecinController::class, 'editPatientForm'])->name('medecin.patient.edit');
-
+    
 });
 
 
@@ -93,6 +80,9 @@ Route::prefix('patient')->middleware(['auth', 'patient'])->group(function () {
     Route::get('/carnet/preview', [PatientController::class, 'previewCarnet'])->name('patient.preview.carnet');
     Route::get('/carnet/download', [PatientController::class, 'downloadCarnet'])->name('patient.download.carnet');
     Route::get('/patients',[PatientController::class,'index'])->name('patients.index');
+    Route::get('/rendezvous/create', [RendezVousController::class, 'create'])->name('patient.rendezvous.create');
+    Route::post('/rendezvous', [RendezVousController::class, 'store'])->name('patient.rendezvous.store');
+
 
 });
 
@@ -110,6 +100,10 @@ Route::post('/rendezvous',[Rendez_VousController::class,'store'])->name('rendezv
 Route::get('/consultations',[ConsultationController::class,'index'])->name('consultations.index');
 Route::post('/consultations',[ConsultationController::class,'store'])->name('consultations.store');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profil/edit', [ProfilController::class, 'edit'])->name('profil.edit');
+    Route::put('/profil', [ProfilController::class, 'update'])->name('profil.update');
+});
 
 
 Route::get('/profil',[ProfilController::class,'index'])->name('profil.index');

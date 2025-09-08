@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User; 
 
 class ProfilController extends Controller
@@ -15,12 +16,14 @@ class ProfilController extends Controller
     }
  public function edit($id)
     {
-        $user = User::findOrFail($id);
+         $user = Auth::user();
         return view('profil.edit', compact('user'));
     }
     // Mettre à jour le profil
     public function update(Request $request)
     {
+         $user = Auth::user();
+
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',

@@ -121,6 +121,14 @@ return redirect()->route('medecin.dashboard')
     return view('medecin.edit-patient', compact('patient'));
 }
 
+public function destroyPatient($id)
+{
+    $patient = Patient::findOrFail($id);
+    $patient->delete();
+
+    return redirect()->route('medecin.mesPatients')
+                     ->with('success', 'Patient supprimé avec succès');
+}
 public function updatePatient(Request $request, $id)
 {
     $request->validate([

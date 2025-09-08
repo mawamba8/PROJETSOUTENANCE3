@@ -43,7 +43,7 @@
                                     <a href="{{ route('medecin.patient.edit', $patient->id) }}" class="btn btn-warning btn-sm mb-1">
                                         <i class="bi bi-pencil-square"></i> Modifier
                                     </a>
-                                    <form action="{{ route('patients.destroy', $patient->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('medecin.patient.destroy', $patient->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger btn-sm mb-1" onclick="return confirm('Voulez-vous vraiment supprimer ce patient ?')">
